@@ -10,43 +10,45 @@ namespace TaskManagement.Application.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _auth0Domain;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+        private readonly string _audience;
 
-        public AuthenticationService(HttpClient httpClient)
+        public AuthenticationService(HttpClient httpClient, string auth0Domain, string clientId, string clientSecret, string audience)
         {
             _httpClient = httpClient;
+            _auth0Domain = auth0Domain;
+            _clientId = clientId;
+            _clientSecret = clientSecret;
+            _audience = audience;
         }
 
         public async Task<string> GetAccessTokenAsync()
         {
-            // Obtener configuración desde variables de entorno
-            var auth0Domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN");
-            var clientId = Environment.GetEnvironmentVariable("AUTH0_CLIENT_ID");
-            var clientSecret = Environment.GetEnvironmentVariable("AUTH0_CLIENT_SECRET");
-            var audience = Environment.GetEnvironmentVariable("AUTH0_AUDIENCE");
-
             // Validar que todos los valores requeridos estén presentes
-            if (string.IsNullOrWhiteSpace(auth0Domain) || string.IsNullOrWhiteSpace(clientId) ||
-                string.IsNullOrWhiteSpace(clientSecret) || string.IsNullOrWhiteSpace(audience))
+            if (string.IsNullOrWhiteSpace(_auth0Domain) || string.IsNullOrWhiteSpace(_clientId) ||
+                string.IsNullOrWhiteSpace(_clientSecret) || string.IsNullOrWhiteSpace(_audience))
             {
                 throw new InvalidOperationException("Configuración de Auth0 incompleta. Verifique que las variables de entorno AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET y AUTH0_AUDIENCE estén configuradas.");
             }
 
             // Validar que el dominio tenga el formato correcto
-            if (!auth0Domain.Contains("."))
+            if (!_auth0Domain.Contains("."))
             {
-                throw new InvalidOperationException($"Formato de dominio Auth0 inválido: {auth0Domain}");
+                throw new InvalidOperationException($"Formato de dominio Auth0 inválido: {_auth0Domain}");
             }
 
         var requestBody = new
         {
-            client_id = clientId,
-            client_secret = clientSecret,
-            audience = audience,
+            client_id = _clientId,
+            client_secret = _clientSecret,
+            audience = _audience,
             grant_type = "client_credentials"
         };
 
         var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync($"https://{auth0Domain}/oauth/token", jsonContent);
+        var response = await _httpClient.PostAsync($"https://{_auth0Domain}/oauth/token", jsonContent);
 
         if (!response.IsSuccessStatusCode)
         {

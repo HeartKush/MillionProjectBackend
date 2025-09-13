@@ -29,6 +29,18 @@ if (string.IsNullOrWhiteSpace(mongoConnectionString) || string.IsNullOrWhiteSpac
     throw new InvalidOperationException("MONGO_CONNECTION_STRING o DATABASE_NAME no configurados. Define variables de entorno o config en appsettings.");
 }
 
+// Validar configuración de Auth0 (opcional, para mostrar errores tempranos)
+var auth0Domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN") ?? builder.Configuration["AUTH0_DOMAIN"];
+var auth0ClientId = Environment.GetEnvironmentVariable("AUTH0_CLIENT_ID") ?? builder.Configuration["AUTH0_CLIENT_ID"];
+var auth0ClientSecret = Environment.GetEnvironmentVariable("AUTH0_CLIENT_SECRET") ?? builder.Configuration["AUTH0_CLIENT_SECRET"];
+var auth0Audience = Environment.GetEnvironmentVariable("AUTH0_AUDIENCE") ?? builder.Configuration["AUTH0_AUDIENCE"];
+
+if (string.IsNullOrWhiteSpace(auth0Domain) || string.IsNullOrWhiteSpace(auth0ClientId) ||
+    string.IsNullOrWhiteSpace(auth0ClientSecret) || string.IsNullOrWhiteSpace(auth0Audience))
+{
+    Console.WriteLine("⚠️  Advertencia: Configuración de Auth0 incompleta. El endpoint /api/Auth/token no funcionará.");
+}
+
 // Registrar servicios en el contenedor
 builder.Services.AddSingleton<IMongoClient, MongoClient>(_ => new MongoClient(mongoConnectionString));
 builder.Services.AddScoped<IMongoDatabase>(sp =>
@@ -36,10 +48,24 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
     var client = sp.GetRequiredService<IMongoClient>();
     return client.GetDatabase(databaseName);
 });
-builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>();
+// Registrar AuthenticationService con configuración
+builder.Services.AddScoped<IAuthenticationService>(serviceProvider =>
+{
+    var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient();
+
+    var auth0Domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN") ?? builder.Configuration["AUTH0_DOMAIN"];
+    var auth0ClientId = Environment.GetEnvironmentVariable("AUTH0_CLIENT_ID") ?? builder.Configuration["AUTH0_CLIENT_ID"];
+    var auth0ClientSecret = Environment.GetEnvironmentVariable("AUTH0_CLIENT_SECRET") ?? builder.Configuration["AUTH0_CLIENT_SECRET"];
+    var auth0Audience = Environment.GetEnvironmentVariable("AUTH0_AUDIENCE") ?? builder.Configuration["AUTH0_AUDIENCE"];
+
+    return new AuthenticationService(httpClient, auth0Domain ?? string.Empty, auth0ClientId ?? string.Empty,
+        auth0ClientSecret ?? string.Empty, auth0Audience ?? string.Empty);
+});
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 
+builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>

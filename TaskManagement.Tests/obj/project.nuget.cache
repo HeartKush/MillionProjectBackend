@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BSnHJkhyOxq6wsLRlDdhS+O33DMXi9QI4TBL9hOcyHQr9yBGuiI4WhfhpKyZruk91x/7pNVijsnLmqCxksjNAg==",
+  "dgSpecHash": "Tt6MgAqRPuNYiM2jEcF6EhkwocGBOSsodyTG7u6vEEjcD0D8c2wubbWM3qwuuKJWqUvvxnB8h1X8uPrE2HVtRQ==",
   "success": true,
-  "projectFilePath": "/home/heartkush/projects/c--proyect-api/TaskManagement.Tests/TaskManagement.Tests.csproj",
+  "projectFilePath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Tests/TaskManagement.Tests.csproj",
   "expectedPackageFiles": [
     "/home/heartkush/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/home/heartkush/.nuget/packages/microsoft.codecoverage/17.10.0/microsoft.codecoverage.17.10.0.nupkg.sha512",

@@ -130,11 +130,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/heartkush/projects/c--proyect-api/TaskManagement.Domain/TaskManagement.Domain.csproj",
+      "projectUniqueName": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj",
       "projectName": "TaskManagement.Domain",
-      "projectPath": "/home/heartkush/projects/c--proyect-api/TaskManagement.Domain/TaskManagement.Domain.csproj",
+      "projectPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj",
       "packagesPath": "/home/heartkush/.nuget/packages/",
-      "outputPath": "/home/heartkush/projects/c--proyect-api/TaskManagement.Domain/obj/",
+      "outputPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/heartkush/.nuget/NuGet/NuGet.Config"
