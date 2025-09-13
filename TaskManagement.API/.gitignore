@@ -1,0 +1,86 @@
+# Logs
+logs
+*.log
+*.tlog
+*.log*
+
+# Runtime files
+*.pid
+*.seed
+
+# Visual Studio Code
+.vscode/
+.vscode/settings.json
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.gen.cs
+
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.app
+*.cache
+*.ilk
+*.pdb
+*.stackdump
+*.mdb
+*.pyc
+*.pyo
+*.pyd
+
+# DotNet specific
+*.dbmdl
+*.ide
+*.ndb
+*.plg
+*.sdf
+*.ldf
+*.sln
+*.tmp
+*.sln.docstates
+
+# Local env files
+.env
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+docker-compose.yml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs
+.idea/
+.vs/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+*.coverlet/*
+coverage.xml
+
+# Others
+node_modules/
+dist/
+publish/
+site/
+
+# JetBrains Rider
+.idea/
+*.iml

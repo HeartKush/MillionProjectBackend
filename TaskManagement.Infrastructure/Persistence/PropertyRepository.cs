@@ -1,0 +1,75 @@
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaskManagement.Domain.Entities;
+using TaskManagement.Domain.Repositories;
+
+namespace TaskManagement.Infrastructure.Persistence
+{
+    public class PropertyRepository : IPropertyRepository
+    {
+        private readonly IMongoDatabase _database;
+
+        public PropertyRepository(IMongoDatabase database)
+        {
+            _database = database;
+        }
+
+        private IMongoCollection<Property> Properties => _database.GetCollection<Property>("Properties");
+        private IMongoCollection<Owner> Owners => _database.GetCollection<Owner>("Owners");
+        private IMongoCollection<PropertyImage> PropertyImages => _database.GetCollection<PropertyImage>("PropertyImages");
+
+        public async Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice)
+        {
+            var filterBuilder = Builders<Property>.Filter;
+            var filter = filterBuilder.Empty;
+
+            if (!string.IsNullOrWhiteSpace(name))
+                filter &= filterBuilder.Regex(p => p.Name, new MongoDB.Bson.BsonRegularExpression(name, "i"));
+
+            if (!string.IsNullOrWhiteSpace(address))
+                filter &= filterBuilder.Regex(p => p.Address, new MongoDB.Bson.BsonRegularExpression(address, "i"));
+
+            if (minPrice.HasValue)
+                filter &= filterBuilder.Gte(p => p.Price, minPrice.Value);
+
+            if (maxPrice.HasValue)
+                filter &= filterBuilder.Lte(p => p.Price, maxPrice.Value);
+
+            return await Properties.Find(filter).ToListAsync();
+        }
+
+        public async Task<Property?> GetPropertyByIdAsync(string propertyId)
+        {
+            return await Properties.Find(p => p.IdProperty == propertyId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Owner?> GetOwnerByIdAsync(string ownerId)
+        {
+            return await Owners.Find(o => o.IdOwner == ownerId).FirstOrDefaultAsync();
+        }
+
+        public async Task<PropertyImage?> GetMainImageForPropertyAsync(string propertyId)
+        {
+            var filter = Builders<PropertyImage>.Filter.And(
+                Builders<PropertyImage>.Filter.Eq(i => i.IdProperty, propertyId),
+                Builders<PropertyImage>.Filter.Eq(i => i.Enabled, true)
+            );
+
+            return await PropertyImages.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<string> CreatePropertyAsync(Property property)
+        {
+            await Properties.InsertOneAsync(property);
+            return property.IdProperty!;
+        }
+
+        public async Task CreatePropertyImageAsync(PropertyImage image)
+        {
+            await PropertyImages.InsertOneAsync(image);
+        }
+    }
+}
+
+
