@@ -1,164 +1,138 @@
-# 📌 API de Gestión de Propiedades
+# 🏠 API de Gestión de Propiedades
 
-Este es un proyecto de API RESTful desarrollado en **.NET 8** que permite a los usuarios gestionar propiedades inmobiliarias, siguiendo principios de **Arquitectura Limpia** y **SOLID**.
-La API está documentada con **Swagger**, se ejecuta en **Docker**, y almacena datos en **MongoDB**.
+API RESTful desarrollada en **.NET 8** para gestión de propiedades inmobiliarias con **MongoDB**, **Swagger** y **Docker**.
 
-## Tabla de Contenidos
+## 🚀 Inicio Rápido
 
-- [Requisitos Previos](#requisitos-previos)
-- [Instalación](#instalación)
-- [Docker](#docker)
-- [Test y Swagger](#test-y-swagger)
-- [Uso](#uso)
-- [Consumo de API Externa](#consumo-de-api-externa)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Principios SOLID Aplicados](#principios-solid-aplicados)
-- [Manejo de Repositorios](#manejo-de-repositorios)
-- [Desarrollado por](#desarrollado-por)
+### Prerrequisitos
 
----
+- .NET 8.0
+- MongoDB (local o en la nube)
+- Docker (opcional)
 
-## ✅ **Requisitos Previos**
+### Instalación
 
-- **.NET 8.0** instalado
-- **Docker** (opcional, si deseas ejecutar la aplicación en contenedores)
-- **MongoDB** en ejecución (local o en la nube)
+1. **Clonar y configurar**
 
----
-
-## 🚀 **Instalación**
-
-1. **Clonar el repositorio**
-
-   ```sh
+   ```bash
    git clone https://github.com/HeartKush/ProjectMillion.git
-
-   ```
-
-2. **Restaurar dependencias**
-
-   ```sh
+   cd ProjectMillion
    dotnet restore
-
    ```
 
-3. **Configurar variables de entorno**
-   Crea un archivo .env con los siguientes valores:
+2. **Variables de entorno**
+   Crear archivo `.env`:
 
    ```env
-   MONGO_CONNECTION_STRING=valores
+   MONGO_CONNECTION_STRING=mongodb://localhost:27017
    DATABASE_NAME=PropertiesBD
-   AUTH0_DOMAIN=valores
-   AUTH0_CLIENT_ID=valores
-   AUTH0_CLIENT_SECRET=valores
-   AUTH0_AUDIENCE=valores
-
+   AUTH0_DOMAIN=tu-dominio.auth0.com
+   AUTH0_CLIENT_ID=tu-client-id
+   AUTH0_CLIENT_SECRET=tu-client-secret
+   AUTH0_AUDIENCE=tu-audience
    ```
 
-4. **Ejecutar la API**
-   ```sh
+3. **Ejecutar**
+
+   ```bash
+   # Local
    dotnet run
+
+   # Docker
+   docker-compose up --build
    ```
 
-## 📦 Docker
+4. **Swagger UI**
+   ```
+   http://localhost:5120/swagger
+   ```
 
-📌 Ejecutar con Docker
-Este comando levanta la API y conecta una base de datos MongoDB.
-
-```sh
-docker-compose up --build
-```
-
-## 📖 Test y Swagger
-
-La API está documentada con Swagger, que permite visualizar y probar los endpoints sin necesidad de usar Postman.
-Puedes acceder a la interfaz en:
-
-```sh
-http://localhost:5120/swagger/index.html
-```
-
-## 📌 Uso (Endpoints)
-
-## 📌 Endpoints Disponibles
+## 📋 Endpoints
 
 ### 🏠 Propiedades
 
-| Método | Endpoint             | Descripción                      |
-| ------ | -------------------- | -------------------------------- |
-| `GET`  | `/api/property`      | Buscar propiedades (con filtros) |
-| `GET`  | `/api/property/{id}` | Obtener detalle de propiedad     |
-| `POST` | `/api/property`      | Crear nueva propiedad            |
+| Método | Endpoint             | Descripción                                                     |
+| ------ | -------------------- | --------------------------------------------------------------- |
+| `GET`  | `/api/property`      | Buscar propiedades (filtros: name, address, minPrice, maxPrice) |
+| `GET`  | `/api/property/{id}` | Detalle de propiedad                                            |
+| `POST` | `/api/property`      | Crear propiedad                                                 |
+
+### 👤 Propietarios
+
+| Método | Endpoint          | Descripción                        |
+| ------ | ----------------- | ---------------------------------- |
+| `GET`  | `/api/owner`      | Buscar propietarios (filtro: name) |
+| `GET`  | `/api/owner/{id}` | Detalle de propietario             |
+| `POST` | `/api/owner`      | Crear propietario                  |
+
+### 📊 Rastros de Propiedades
+
+| Método | Endpoint                                      | Descripción                          |
+| ------ | --------------------------------------------- | ------------------------------------ |
+| `GET`  | `/api/propertytrace/by-property/{propertyId}` | Historial de ventas de una propiedad |
+| `POST` | `/api/propertytrace`                          | Registrar venta                      |
 
 ### 🔐 Autenticación
 
-| Método | Endpoint          | Descripción             |
-| ------ | ----------------- | ----------------------- |
-| `GET`  | `/api/auth/token` | Obtener token de acceso |
+| Método | Endpoint          | Descripción         |
+| ------ | ----------------- | ------------------- |
+| `GET`  | `/api/auth/token` | Obtener token Auth0 |
 
-## 📌 Filtros de Búsqueda de Propiedades
+## 📁 Arquitectura
 
-Puedes filtrar las propiedades usando los siguientes parámetros de query:
-
-- `name` - Nombre de la propiedad
-- `address` - Dirección
-- `minPrice` - Precio mínimo
-- `maxPrice` - Precio máximo
-
-Ejemplo: `/api/property?name=casa&minPrice=100000&maxPrice=500000`
-
-## 🌐 Consumo de API Externa
-
-Este proyecto implementa autenticación a través de Auth0.
-Para obtener un token de autenticación:
-
-```sh
-GET /api/auth/token
+```
+TaskManagement/
+├── TaskManagement.API/           # Controladores y configuración
+├── TaskManagement.Application/   # Servicios y DTOs
+├── TaskManagement.Domain/        # Entidades y repositorios
+├── TaskManagement.Infrastructure/ # Persistencia MongoDB
+└── TaskManagement.Tests/        # Pruebas unitarias
 ```
 
-### Respuesta:
+## 🛠️ Tecnologías
 
-```json
+- **.NET 8** - Framework principal
+- **MongoDB** - Base de datos NoSQL
+- **Swagger** - Documentación de API
+- **Docker** - Containerización
+- **Auth0** - Autenticación
+- **Clean Architecture** - Principios SOLID
+
+## 📝 Ejemplos de Uso
+
+### Buscar propiedades
+
+```bash
+GET /api/property?name=casa&minPrice=100000&maxPrice=500000
+```
+
+
+### Crear propiedad
+
+```bash
+POST /api/property
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIs..."
+  "name": "Casa Centro",
+  "address": "Av. Principal 123",
+  "price": 250000,
+  "codeInternal": "C001",
+  "year": 2020,
+  "idOwner": "64f1a2b3c4d5e6f7g8h9i0j1"
 }
 ```
 
-## 📁 Estructura del Proyecto
+### Crear propietario
 
 ```bash
-📦 TaskManagement
-├── 📂 TaskManagement.API            # API principal
-├── 📂 TaskManagement.Application    # Lógica de negocio
-├── 📂 TaskManagement.Domain         # Entidades y modelos
-├── 📂 TaskManagement.Infrastructure # Persistencia y repositorios
-└── 📄 TaskManagement.sln            # Solución de .NET
-```
-
-## 🔥 Principios SOLID Aplicados
-
-- **S:** Single Responsibility _(Cada clase tiene una única responsabilidad)_
-- **O:** Open/Closed _(El código es extensible sin modificar la base)_
-- **L:** Liskov Substitution _(Se usan interfaces y polimorfismo correctamente)_
-- **I:** Interface Segregation _(Interfaces específicas para cada funcionalidad)_
-- **D:** Dependency Inversion _(Uso de inyección de dependencias)_
-
-## 🚀 Manejo de Repositorios
-
-- `main` → Rama estable para producción.
-- `dev` → Desarrollo de nuevas funcionalidades.
-- `feature/nueva-funcionalidad` → Ramas específicas para cada cambio.
-
-### Ejemplo:
-
-```sh
-git checkout -b feature/agregar-autenticacion
-git commit -m "Agregada autenticación con Auth0"
-git push origin feature/agregar-autenticacion
+POST /api/owner
+{
+  "name": "Juan Pérez",
+  "address": "Calle 123",
+  "photo": "https://example.com/photo.jpg",
+  "birthday": "1990-01-01"
+}
 ```
 
 ## 👨‍💻 Desarrollado por
 
-**Ismael Parra**
-
-https://www.linkedin.com/in/ismaelparra
+**Ismael Parra** - [LinkedIn](https://www.linkedin.com/in/ismaelparra)
