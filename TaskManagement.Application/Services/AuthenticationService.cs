@@ -26,14 +26,12 @@ namespace TaskManagement.Application.Services
 
         public async Task<string> GetAccessTokenAsync()
         {
-            // Validar que todos los valores requeridos estén presentes
             if (string.IsNullOrWhiteSpace(_auth0Domain) || string.IsNullOrWhiteSpace(_clientId) ||
                 string.IsNullOrWhiteSpace(_clientSecret) || string.IsNullOrWhiteSpace(_audience))
             {
                 throw new InvalidOperationException("Configuración de Auth0 incompleta. Verifique que las variables de entorno AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET y AUTH0_AUDIENCE estén configuradas.");
             }
 
-            // Validar que el dominio tenga el formato correcto
             if (!_auth0Domain.Contains("."))
             {
                 throw new InvalidOperationException($"Formato de dominio Auth0 inválido: {_auth0Domain}");

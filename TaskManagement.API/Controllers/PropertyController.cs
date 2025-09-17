@@ -17,9 +17,6 @@ namespace TaskManagement.API.Controllers
             _propertyService = propertyService;
         }
 
-        /// <summary>
-        /// Busca propiedades por nombre, dirección y rango de precio.
-        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<PropertyListItemDto>), 200)]
         public async Task<IActionResult> Search([FromQuery] string? name, [FromQuery] string? address, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
@@ -28,9 +25,6 @@ namespace TaskManagement.API.Controllers
             return Ok(items);
         }
 
-        /// <summary>
-        /// Obtiene el detalle de una propiedad.
-        /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PropertyDetailDto), 200)]
         [ProducesResponseType(404)]
@@ -41,9 +35,6 @@ namespace TaskManagement.API.Controllers
             return Ok(detail);
         }
 
-        /// <summary>
-        /// Crea una nueva propiedad con una imagen opcional.
-        /// </summary>
         [HttpPost]
         [ProducesResponseType(typeof(string), 201)]
         [ProducesResponseType(400)]
