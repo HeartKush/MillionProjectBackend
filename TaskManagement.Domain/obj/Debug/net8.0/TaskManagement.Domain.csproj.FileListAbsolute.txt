@@ -24,3 +24,16 @@
 /home/heartkush/projects/ProjectMillion/TaskManagement.Domain/obj/Debug/net8.0/refint/TaskManagement.Domain.dll
 /home/heartkush/projects/ProjectMillion/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.pdb
 /home/heartkush/projects/ProjectMillion/TaskManagement.Domain/obj/Debug/net8.0/ref/TaskManagement.Domain.dll
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/bin/Debug/net8.0/TaskManagement.Domain.deps.json
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/bin/Debug/net8.0/TaskManagement.Domain.dll
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/bin/Debug/net8.0/TaskManagement.Domain.pdb
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.csproj.AssemblyReference.cache
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.AssemblyInfoInputs.cache
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.AssemblyInfo.cs
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.csproj.CoreCompileInputs.cache
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.sourcelink.json
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.dll
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/refint/TaskManagement.Domain.dll
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/TaskManagement.Domain.pdb
+/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/Debug/net8.0/ref/TaskManagement.Domain.dll

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GpszBzS9hJhZy6gUU/UwaxT7PaAE8aT+WPfWJuVIMFUexYHBNG4wRnrMzUGBx8JwjSdFkgKSG8pGRFue92A93Q==",
+  "dgSpecHash": "tEkfaFB4NfMjlw3czgnc9nFoq5uWOzUydFxANaLrFuaKxIR+o2zCbta5mBPqh64MpdSf79FwgyitUuFJanKyew==",
   "success": true,
-  "projectFilePath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Application/TaskManagement.Application.csproj",
+  "projectFilePath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Application/TaskManagement.Application.csproj",
   "expectedPackageFiles": [
     "/home/heartkush/.nuget/packages/mongodb.bson/3.1.0/mongodb.bson.3.1.0.nupkg.sha512",
     "/home/heartkush/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",

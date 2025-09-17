@@ -1,9 +1,0 @@
-[33m73fa5a6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m docs: update README with new features and improved structure
-[33m4ef5743[m refactor: clean up unnecessary comments in existing code
-[33m9953fe1[m feat: register new services and repositories in DI container
-[33m0584fad[m feat: add API controllers for Owner and PropertyTrace
-[33m2de8e69[m feat: implement MongoDB repositories for Owner and PropertyTrace
-[33m860fa15[m feat: implement Owner and PropertyTrace services
-[33m5cc209e[m feat: add DTOs for Owner and PropertyTrace with validation
-[33m227f98f[m feat: add service interfaces for Owner and PropertyTrace
-[33m243017f[m feat: add repository interfaces for Owner and PropertyTrace

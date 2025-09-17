@@ -6,17 +6,30 @@ using TaskManagement.Application.Models;
 
 namespace TaskManagement.API.Controllers
 {
+    /// <summary>
+    /// Controlador para gestionar propietarios de propiedades.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class OwnerController : ControllerBase
     {
         private readonly IOwnerService _service;
 
+        /// <summary>
+        /// Constructor del controlador de propietarios.
+        /// </summary>
+        /// <param name="service">Servicio de gestión de propietarios.</param>
         public OwnerController(IOwnerService service)
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Busca propietarios por nombre.
+        /// </summary>
+        /// <param name="name">Nombre del propietario a buscar (opcional).</param>
+        /// <returns>Lista de propietarios que coinciden con el criterio de búsqueda.</returns>
+        /// <response code="200">Devuelve la lista de propietarios encontrados.</response>
         [HttpGet]
         [ProducesResponseType(typeof(List<OwnerListItemDto>), 200)]
         public async Task<IActionResult> Search([FromQuery] string? name)
@@ -25,6 +38,13 @@ namespace TaskManagement.API.Controllers
             return Ok(items);
         }
 
+        /// <summary>
+        /// Obtiene un propietario por su ID.
+        /// </summary>
+        /// <param name="id">ID único del propietario.</param>
+        /// <returns>Detalles del propietario solicitado.</returns>
+        /// <response code="200">Devuelve los detalles del propietario.</response>
+        /// <response code="404">No se encontró el propietario con el ID especificado.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(OwnerDetailDto), 200)]
         [ProducesResponseType(404)]
@@ -35,6 +55,13 @@ namespace TaskManagement.API.Controllers
             return Ok(owner);
         }
 
+        /// <summary>
+        /// Crea un nuevo propietario.
+        /// </summary>
+        /// <param name="request">Datos del propietario a crear.</param>
+        /// <returns>ID del propietario creado.</returns>
+        /// <response code="201">Propietario creado exitosamente.</response>
+        /// <response code="400">Datos de entrada inválidos.</response>
         [HttpPost]
         [ProducesResponseType(typeof(string), 201)]
         [ProducesResponseType(400)]

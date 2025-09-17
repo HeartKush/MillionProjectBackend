@@ -148,11 +148,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/heartkush/projects/ProjectMillion/TaskManagement.Application/TaskManagement.Application.csproj",
+      "projectUniqueName": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Application/TaskManagement.Application.csproj",
       "projectName": "TaskManagement.Application",
-      "projectPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Application/TaskManagement.Application.csproj",
+      "projectPath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Application/TaskManagement.Application.csproj",
       "packagesPath": "/home/heartkush/.nuget/packages/",
-      "outputPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Application/obj/",
+      "outputPath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Application/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/heartkush/.nuget/NuGet/NuGet.Config"
@@ -167,8 +167,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj": {
-              "projectPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj"
+            "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj": {
+              "projectPath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj"
             }
           }
         }

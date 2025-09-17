@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj": {}
+    "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj": {}
   },
   "projects": {
-    "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj": {
+    "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj",
+        "projectUniqueName": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj",
         "projectName": "TaskManagement.Domain",
-        "projectPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/TaskManagement.Domain.csproj",
+        "projectPath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/TaskManagement.Domain.csproj",
         "packagesPath": "/home/heartkush/.nuget/packages/",
-        "outputPath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Domain/obj/",
+        "outputPath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/heartkush/.nuget/NuGet/NuGet.Config"

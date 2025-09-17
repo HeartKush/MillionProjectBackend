@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Vqkf4f3dD1lQhpdzh7fJTS15+vdup8zZ2SV1jEu5Xi/yZw6WSsk1GONJZXQT1IfcwTOXWP3SRY0Yfkzah/LluA==",
+  "dgSpecHash": "H3u5bY71jvcndDHcVK98bSmzresu8deybSkln3BzOtlN0WG3zLUAsfl+ZZ61XlBaya+wAWNfKlETUSND6NF2yw==",
   "success": true,
-  "projectFilePath": "/home/heartkush/projects/ProjectMillion/TaskManagement.Infrastructure/TaskManagement.Infrastructure.csproj",
+  "projectFilePath": "/home/heartkush/projects/MillionProject/MillionProjectBackend/TaskManagement.Infrastructure/TaskManagement.Infrastructure.csproj",
   "expectedPackageFiles": [
     "/home/heartkush/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/home/heartkush/.nuget/packages/microsoft.extensions.logging.abstractions/2.0.0/microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
