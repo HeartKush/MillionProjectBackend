@@ -8,7 +8,7 @@ namespace TaskManagement.Domain.Repositories
     {
         Task<Owner?> GetOwnerByIdAsync(string ownerId);
         Task<string> CreateOwnerAsync(Owner owner);
-        Task<List<Owner>> SearchOwnersAsync(string? name);
+        Task<List<Owner>> SearchOwnersAsync(string? name, string? address = null);
     }
 }
 

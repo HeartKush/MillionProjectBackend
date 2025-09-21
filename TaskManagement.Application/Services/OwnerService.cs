@@ -44,9 +44,9 @@ namespace TaskManagement.Application.Services
             return await _ownerRepository.CreateOwnerAsync(owner);
         }
 
-        public async Task<List<OwnerListItemDto>> SearchAsync(string? name)
+        public async Task<List<OwnerListItemDto>> SearchAsync(string? name, string? address = null)
         {
-            var owners = await _ownerRepository.SearchOwnersAsync(name);
+            var owners = await _ownerRepository.SearchOwnersAsync(name, address);
             var items = new List<OwnerListItemDto>();
             foreach (var owner in owners)
             {
@@ -54,6 +54,7 @@ namespace TaskManagement.Application.Services
                 {
                     IdOwner = owner.IdOwner,
                     Name = owner.Name,
+                    Address = owner.Address,
                     Photo = owner.Photo
                 });
             }

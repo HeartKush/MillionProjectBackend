@@ -25,16 +25,17 @@ namespace TaskManagement.API.Controllers
         }
 
         /// <summary>
-        /// Busca propietarios por nombre.
+        /// Busca propietarios por nombre y/o dirección.
         /// </summary>
         /// <param name="name">Nombre del propietario a buscar (opcional).</param>
+        /// <param name="address">Dirección del propietario a buscar (opcional).</param>
         /// <returns>Lista de propietarios que coinciden con el criterio de búsqueda.</returns>
         /// <response code="200">Devuelve la lista de propietarios encontrados.</response>
         [HttpGet]
         [ProducesResponseType(typeof(List<OwnerListItemDto>), 200)]
-        public async Task<IActionResult> Search([FromQuery] string? name)
+        public async Task<IActionResult> Search([FromQuery] string? name, [FromQuery] string? address)
         {
-            var items = await _service.SearchAsync(name);
+            var items = await _service.SearchAsync(name, address);
             return Ok(items);
         }
 
