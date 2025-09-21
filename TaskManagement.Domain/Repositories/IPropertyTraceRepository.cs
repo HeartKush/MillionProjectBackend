@@ -8,6 +8,9 @@ namespace TaskManagement.Domain.Repositories
     {
         Task<string> CreatePropertyTraceAsync(PropertyTrace trace);
         Task<List<PropertyTrace>> GetTracesByPropertyIdAsync(string propertyId);
+        Task<PropertyTrace?> GetPropertyTraceByIdAsync(string traceId);
+        Task UpdatePropertyTraceAsync(PropertyTrace trace);
+        Task DeletePropertyTraceAsync(string traceId);
     }
 }
 

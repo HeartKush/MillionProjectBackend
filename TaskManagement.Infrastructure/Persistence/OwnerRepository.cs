@@ -42,8 +42,8 @@ namespace TaskManagement.Infrastructure.Persistence
                 filters.Add(Builders<Owner>.Filter.Regex(o => o.Address, new MongoDB.Bson.BsonRegularExpression(address, "i")));
             }
 
-            var filter = filters.Count == 0 
-                ? Builders<Owner>.Filter.Empty 
+            var filter = filters.Count == 0
+                ? Builders<Owner>.Filter.Empty
                 : Builders<Owner>.Filter.And(filters);
 
             return await Owners.Find(filter).ToListAsync();

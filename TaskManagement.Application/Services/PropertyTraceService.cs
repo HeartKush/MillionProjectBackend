@@ -47,6 +47,41 @@ namespace TaskManagement.Application.Services
             }
             return items;
         }
+
+        public async Task<PropertyTraceListItemDto?> GetByIdAsync(string traceId)
+        {
+            var trace = await _repository.GetPropertyTraceByIdAsync(traceId);
+            if (trace == null) return null;
+
+            return new PropertyTraceListItemDto
+            {
+                IdPropertyTrace = trace.IdPropertyTrace,
+                DateSale = trace.DateSale,
+                Name = trace.Name,
+                Value = trace.Value,
+                Tax = trace.Tax,
+                IdProperty = trace.IdProperty
+            };
+        }
+
+        public async Task UpdateAsync(string traceId, CreatePropertyTraceRequest request)
+        {
+            var trace = new PropertyTrace
+            {
+                IdPropertyTrace = traceId,
+                DateSale = request.DateSale,
+                Name = request.Name,
+                Value = request.Value,
+                Tax = request.Tax,
+                IdProperty = request.IdProperty
+            };
+            await _repository.UpdatePropertyTraceAsync(trace);
+        }
+
+        public async Task DeleteAsync(string traceId)
+        {
+            await _repository.DeletePropertyTraceAsync(traceId);
+        }
     }
 }
 

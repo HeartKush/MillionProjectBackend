@@ -27,6 +27,21 @@ namespace TaskManagement.Infrastructure.Persistence
         {
             return await PropertyTraces.Find(t => t.IdProperty == propertyId).ToListAsync();
         }
+
+        public async Task<PropertyTrace?> GetPropertyTraceByIdAsync(string traceId)
+        {
+            return await PropertyTraces.Find(t => t.IdPropertyTrace == traceId).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdatePropertyTraceAsync(PropertyTrace trace)
+        {
+            await PropertyTraces.ReplaceOneAsync(t => t.IdPropertyTrace == trace.IdPropertyTrace, trace);
+        }
+
+        public async Task DeletePropertyTraceAsync(string traceId)
+        {
+            await PropertyTraces.DeleteOneAsync(t => t.IdPropertyTrace == traceId);
+        }
     }
 }
 

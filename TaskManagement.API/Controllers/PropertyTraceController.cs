@@ -56,6 +56,61 @@ namespace TaskManagement.API.Controllers
             var id = await _service.CreateAsync(request);
             return Created(string.Empty, new { id });
         }
+
+        /// <summary>
+        /// Obtiene una traza específica por su ID.
+        /// </summary>
+        /// <param name="id">ID de la traza a obtener.</param>
+        /// <returns>Detalles de la traza solicitada.</returns>
+        /// <response code="200">Devuelve los detalles de la traza.</response>
+        /// <response code="404">No se encontró la traza con el ID especificado.</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PropertyTraceListItemDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var trace = await _service.GetByIdAsync(id);
+            if (trace == null) return NotFound();
+            return Ok(trace);
+        }
+
+        /// <summary>
+        /// Actualiza una traza existente.
+        /// </summary>
+        /// <param name="id">ID de la traza a actualizar.</param>
+        /// <param name="request">Datos actualizados de la traza.</param>
+        /// <returns>Resultado de la operación.</returns>
+        /// <response code="204">Traza actualizada exitosamente.</response>
+        /// <response code="400">Datos de entrada inválidos.</response>
+        /// <response code="404">No se encontró la traza con el ID especificado.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update(string id, [FromBody] CreatePropertyTraceRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _service.UpdateAsync(id, request);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Elimina una traza específica.
+        /// </summary>
+        /// <param name="id">ID de la traza a eliminar.</param>
+        /// <returns>Resultado de la operación.</returns>
+        /// <response code="204">Traza eliminada exitosamente.</response>
+        /// <response code="404">No se encontró la traza con el ID especificado.</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }
 

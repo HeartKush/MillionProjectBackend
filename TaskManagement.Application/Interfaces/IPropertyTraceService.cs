@@ -8,6 +8,9 @@ namespace TaskManagement.Application.Interfaces
     {
         Task<string> CreateAsync(CreatePropertyTraceRequest request);
         Task<List<PropertyTraceListItemDto>> GetByPropertyIdAsync(string propertyId);
+        Task<PropertyTraceListItemDto?> GetByIdAsync(string traceId);
+        Task UpdateAsync(string traceId, CreatePropertyTraceRequest request);
+        Task DeleteAsync(string traceId);
     }
 }
 
