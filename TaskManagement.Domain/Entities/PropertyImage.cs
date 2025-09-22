@@ -14,6 +14,8 @@ namespace TaskManagement.Domain.Entities
 
         public string? File { get; set; }
         public bool Enabled { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
     }
 }
 
