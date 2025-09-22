@@ -70,7 +70,9 @@ namespace TaskManagement.Application.Services
                 Price = request.Price,
                 CodeInternal = request.CodeInternal,
                 Year = request.Year,
-                IdOwner = request.IdOwner
+                IdOwner = request.IdOwner,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = null
             };
 
             var id = await _propertyRepository.CreatePropertyAsync(property);

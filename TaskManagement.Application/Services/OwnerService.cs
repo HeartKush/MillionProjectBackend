@@ -40,7 +40,9 @@ namespace TaskManagement.Application.Services
                 Name = request.Name,
                 Address = request.Address,
                 Photo = request.Photo,
-                Birthday = request.Birthday
+                Birthday = request.Birthday,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = null
             };
 
             return await _ownerRepository.CreateOwnerAsync(owner);
