@@ -10,6 +10,8 @@ namespace TaskManagement.Application.Models
         public string? CodeInternal { get; set; }
         public int Year { get; set; }
         public string? ImageUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
 

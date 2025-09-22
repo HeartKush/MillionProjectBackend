@@ -27,7 +27,9 @@ namespace TaskManagement.Application.Services
                 Name = owner.Name,
                 Address = owner.Address,
                 Photo = owner.Photo,
-                Birthday = owner.Birthday
+                Birthday = owner.Birthday,
+                CreatedAt = owner.CreatedAt,
+                UpdatedAt = owner.UpdatedAt
             };
         }
 
@@ -53,6 +55,7 @@ namespace TaskManagement.Application.Services
             existingOwner.Address = request.Address;
             existingOwner.Photo = request.Photo;
             existingOwner.Birthday = request.Birthday;
+            existingOwner.UpdatedAt = DateTime.UtcNow;
 
             return await _ownerRepository.UpdateOwnerAsync(existingOwner);
         }
@@ -73,7 +76,8 @@ namespace TaskManagement.Application.Services
                     IdOwner = owner.IdOwner,
                     Name = owner.Name,
                     Address = owner.Address,
-                    Photo = owner.Photo
+                    Photo = owner.Photo,
+                    CreatedAt = owner.CreatedAt
                 });
             }
             return items;

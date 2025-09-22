@@ -95,7 +95,7 @@ namespace TaskManagement.API.Controllers
 
             var success = await _service.UpdateAsync(id, request);
             if (!success) return NotFound();
-            
+
             return NoContent();
         }
 
@@ -113,7 +113,7 @@ namespace TaskManagement.API.Controllers
         {
             var success = await _service.DeleteAsync(id);
             if (!success) return NotFound();
-            
+
             return NoContent();
         }
     }

@@ -8,6 +8,7 @@ namespace TaskManagement.Application.Models
         public string? Name { get; set; }
         public string? Address { get; set; }
         public string? Photo { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 
     public class OwnerDetailDto
@@ -17,6 +18,8 @@ namespace TaskManagement.Application.Models
         public string? Address { get; set; }
         public string? Photo { get; set; }
         public System.DateTime? Birthday { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 
     public class CreateOwnerRequest

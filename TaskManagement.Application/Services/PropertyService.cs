@@ -32,7 +32,8 @@ namespace TaskManagement.Application.Services
                     Name = property.Name,
                     Address = property.Address,
                     Price = property.Price,
-                    ImageUrl = image?.File
+                    ImageUrl = image?.File,
+                    CreatedAt = property.CreatedAt
                 });
             }
 
@@ -54,7 +55,9 @@ namespace TaskManagement.Application.Services
                 Price = property.Price,
                 CodeInternal = property.CodeInternal,
                 Year = property.Year,
-                ImageUrl = image?.File
+                ImageUrl = image?.File,
+                CreatedAt = property.CreatedAt,
+                UpdatedAt = property.UpdatedAt
             };
         }
 
@@ -99,7 +102,9 @@ namespace TaskManagement.Application.Services
                 Price = request.Price,
                 CodeInternal = request.CodeInternal,
                 Year = request.Year,
-                IdOwner = request.IdOwner
+                IdOwner = request.IdOwner,
+                CreatedAt = existingProperty.CreatedAt, // Preserve original creation date
+                UpdatedAt = DateTime.UtcNow
             };
 
             await _propertyRepository.UpdatePropertyAsync(property);
