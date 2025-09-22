@@ -18,6 +18,7 @@ namespace TaskManagement.Infrastructure.Persistence
         private IMongoCollection<Property> Properties => _database.GetCollection<Property>("Properties");
         private IMongoCollection<Owner> Owners => _database.GetCollection<Owner>("Owners");
         private IMongoCollection<PropertyImage> PropertyImages => _database.GetCollection<PropertyImage>("PropertyImages");
+        private IMongoCollection<PropertyTrace> PropertyTraces => _database.GetCollection<PropertyTrace>("PropertyTraces");
 
         public async Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice, string? idOwner)
         {
@@ -62,6 +63,13 @@ namespace TaskManagement.Infrastructure.Persistence
             return await PropertyImages.Find(filter).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> HasTransactionsAsync(string propertyId)
+        {
+            var filter = Builders<PropertyTrace>.Filter.Eq(t => t.IdProperty, propertyId);
+            var count = await PropertyTraces.CountDocumentsAsync(filter);
+            return count > 0;
+        }
+
         public async Task<string> CreatePropertyAsync(Property property)
         {
             await Properties.InsertOneAsync(property);
@@ -70,6 +78,21 @@ namespace TaskManagement.Infrastructure.Persistence
 
         public async Task CreatePropertyImageAsync(PropertyImage image)
         {
+            await PropertyImages.InsertOneAsync(image);
+        }
+
+        public async Task UpdatePropertyImageAsync(PropertyImage image)
+        {
+            var filter = Builders<PropertyImage>.Filter.And(
+                Builders<PropertyImage>.Filter.Eq(i => i.IdProperty, image.IdProperty),
+                Builders<PropertyImage>.Filter.Eq(i => i.Enabled, true)
+            );
+
+            // First, disable all existing images for this property
+            var updateDisable = Builders<PropertyImage>.Update.Set(i => i.Enabled, false);
+            await PropertyImages.UpdateManyAsync(filter, updateDisable);
+
+            // Then, create the new image
             await PropertyImages.InsertOneAsync(image);
         }
 
