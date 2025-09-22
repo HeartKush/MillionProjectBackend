@@ -21,6 +21,8 @@ namespace TaskManagement.Domain.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string? IdOwner { get; set; }
 
+        public bool Featured { get; set; } = false;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
     }

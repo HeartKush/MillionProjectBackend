@@ -10,6 +10,7 @@ namespace TaskManagement.Application.Models
         public string? IdOwner { get; set; }
         public string? ImageUrl { get; set; }
         public bool ImageEnabled { get; set; } = true;
+        public bool Featured { get; set; } = false;
     }
 }
 

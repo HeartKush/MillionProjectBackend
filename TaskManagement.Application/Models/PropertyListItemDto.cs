@@ -9,6 +9,8 @@ namespace TaskManagement.Application.Models
         public decimal Price { get; set; }
         public string? ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool HasTransactions { get; set; }
+        public bool Featured { get; set; }
     }
 }
 
