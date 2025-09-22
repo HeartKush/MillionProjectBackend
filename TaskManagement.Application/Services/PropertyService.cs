@@ -25,6 +25,7 @@ namespace TaskManagement.Application.Services
             foreach (var property in properties)
             {
                 var image = await _propertyRepository.GetMainImageForPropertyAsync(property.IdProperty!);
+                var hasTransactions = await _propertyRepository.HasTransactionsAsync(property.IdProperty!);
                 results.Add(new PropertyListItemDto
                 {
                     IdProperty = property.IdProperty,
@@ -33,7 +34,9 @@ namespace TaskManagement.Application.Services
                     Address = property.Address,
                     Price = property.Price,
                     ImageUrl = image?.File,
-                    CreatedAt = property.CreatedAt
+                    CreatedAt = property.CreatedAt,
+                    HasTransactions = hasTransactions,
+                    Featured = property.Featured
                 });
             }
 
@@ -57,7 +60,8 @@ namespace TaskManagement.Application.Services
                 Year = property.Year,
                 ImageUrl = image?.File,
                 CreatedAt = property.CreatedAt,
-                UpdatedAt = property.UpdatedAt
+                UpdatedAt = property.UpdatedAt,
+                Featured = property.Featured
             };
         }
 
@@ -71,6 +75,7 @@ namespace TaskManagement.Application.Services
                 CodeInternal = request.CodeInternal,
                 Year = request.Year,
                 IdOwner = request.IdOwner,
+                Featured = request.Featured,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = null
             };
@@ -105,6 +110,7 @@ namespace TaskManagement.Application.Services
                 CodeInternal = request.CodeInternal,
                 Year = request.Year,
                 IdOwner = request.IdOwner,
+                Featured = request.Featured,
                 CreatedAt = existingProperty.CreatedAt, // Preserve original creation date
                 UpdatedAt = DateTime.UtcNow
             };
@@ -114,9 +120,8 @@ namespace TaskManagement.Application.Services
             // Handle image update
             if (!string.IsNullOrWhiteSpace(request.ImageUrl))
             {
-                // For simplicity, we'll create a new image record
-                // In a real scenario, you might want to update existing images
-                await _propertyRepository.CreatePropertyImageAsync(new PropertyImage
+                // Update the existing image instead of creating a new one
+                await _propertyRepository.UpdatePropertyImageAsync(new PropertyImage
                 {
                     IdProperty = id,
                     File = request.ImageUrl,
