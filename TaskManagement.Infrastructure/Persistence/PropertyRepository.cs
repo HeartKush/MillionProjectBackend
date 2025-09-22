@@ -72,6 +72,16 @@ namespace TaskManagement.Infrastructure.Persistence
         {
             await PropertyImages.InsertOneAsync(image);
         }
+
+        public async Task UpdatePropertyAsync(Property property)
+        {
+            await Properties.ReplaceOneAsync(p => p.IdProperty == property.IdProperty, property);
+        }
+
+        public async Task DeletePropertyAsync(string propertyId)
+        {
+            await Properties.DeleteOneAsync(p => p.IdProperty == propertyId);
+        }
     }
 }
 

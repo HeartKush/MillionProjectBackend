@@ -77,6 +77,58 @@ namespace TaskManagement.API.Controllers
             var id = await _propertyService.CreateAsync(request);
             return CreatedAtAction(nameof(GetById), new { id }, new { id });
         }
+
+        /// <summary>
+        /// Actualiza una propiedad existente.
+        /// </summary>
+        /// <param name="id">ID de la propiedad a actualizar.</param>
+        /// <param name="request">Datos actualizados de la propiedad.</param>
+        /// <returns>Resultado de la actualización.</returns>
+        /// <response code="200">Propiedad actualizada exitosamente.</response>
+        /// <response code="400">Datos de entrada inválidos o campos obligatorios faltantes.</response>
+        /// <response code="404">Propiedad no encontrada.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update(string id, [FromBody] CreatePropertyRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.Address))
+                return BadRequest("Name y Address son obligatorios.");
+
+            try
+            {
+                var result = await _propertyService.UpdateAsync(id, request);
+                return Ok(new { id = result });
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"Propiedad con ID '{id}' no encontrada.");
+            }
+        }
+
+        /// <summary>
+        /// Elimina una propiedad.
+        /// </summary>
+        /// <param name="id">ID de la propiedad a eliminar.</param>
+        /// <returns>Resultado de la eliminación.</returns>
+        /// <response code="204">Propiedad eliminada exitosamente.</response>
+        /// <response code="404">Propiedad no encontrada.</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                await _propertyService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"Propiedad con ID '{id}' no encontrada.");
+            }
+        }
     }
 }
 

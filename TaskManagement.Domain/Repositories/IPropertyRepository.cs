@@ -12,6 +12,8 @@ namespace TaskManagement.Domain.Repositories
         Task<PropertyImage?> GetMainImageForPropertyAsync(string propertyId);
         Task<string> CreatePropertyAsync(Property property);
         Task CreatePropertyImageAsync(PropertyImage image);
+        Task UpdatePropertyAsync(Property property);
+        Task DeletePropertyAsync(string propertyId);
     }
 }
 

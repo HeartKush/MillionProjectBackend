@@ -84,6 +84,50 @@ namespace TaskManagement.Application.Services
 
             return id;
         }
+
+        public async Task<string> UpdateAsync(string id, CreatePropertyRequest request)
+        {
+            var existingProperty = await _propertyRepository.GetPropertyByIdAsync(id);
+            if (existingProperty == null)
+                throw new ArgumentException($"Property with ID '{id}' not found.");
+
+            var property = new Property
+            {
+                IdProperty = id,
+                Name = request.Name,
+                Address = request.Address,
+                Price = request.Price,
+                CodeInternal = request.CodeInternal,
+                Year = request.Year,
+                IdOwner = request.IdOwner
+            };
+
+            await _propertyRepository.UpdatePropertyAsync(property);
+
+            // Handle image update
+            if (!string.IsNullOrWhiteSpace(request.ImageUrl))
+            {
+                // For simplicity, we'll create a new image record
+                // In a real scenario, you might want to update existing images
+                await _propertyRepository.CreatePropertyImageAsync(new PropertyImage
+                {
+                    IdProperty = id,
+                    File = request.ImageUrl,
+                    Enabled = request.ImageEnabled
+                });
+            }
+
+            return id;
+        }
+
+        public async Task DeleteAsync(string id)
+        {
+            var existingProperty = await _propertyRepository.GetPropertyByIdAsync(id);
+            if (existingProperty == null)
+                throw new ArgumentException($"Property with ID '{id}' not found.");
+
+            await _propertyRepository.DeletePropertyAsync(id);
+        }
     }
 }
 
