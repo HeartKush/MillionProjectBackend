@@ -88,7 +88,6 @@ namespace TaskManagement.Infrastructure.Persistence
                 Builders<PropertyImage>.Filter.Eq(i => i.Enabled, true)
             );
 
-            // First, disable all existing images for this property
             var updateDisable = Builders<PropertyImage>.Update.Set(i => i.Enabled, false);
             await PropertyImages.UpdateManyAsync(filter, updateDisable);
 

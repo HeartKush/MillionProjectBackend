@@ -111,16 +111,14 @@ namespace TaskManagement.Application.Services
                 Year = request.Year,
                 IdOwner = request.IdOwner,
                 Featured = request.Featured,
-                CreatedAt = existingProperty.CreatedAt, // Preserve original creation date
+                CreatedAt = existingProperty.CreatedAt,
                 UpdatedAt = DateTime.UtcNow
             };
 
             await _propertyRepository.UpdatePropertyAsync(property);
 
-            // Handle image update
             if (!string.IsNullOrWhiteSpace(request.ImageUrl))
             {
-                // Update the existing image instead of creating a new one
                 await _propertyRepository.UpdatePropertyImageAsync(new PropertyImage
                 {
                     IdProperty = id,
