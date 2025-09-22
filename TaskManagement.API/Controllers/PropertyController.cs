@@ -31,13 +31,14 @@ namespace TaskManagement.API.Controllers
         /// <param name="address">Dirección de la propiedad a buscar (opcional).</param>
         /// <param name="minPrice">Precio mínimo de búsqueda (opcional).</param>
         /// <param name="maxPrice">Precio máximo de búsqueda (opcional).</param>
+        /// <param name="idOwner">ID del propietario para filtrar propiedades (opcional).</param>
         /// <returns>Lista de propiedades que coinciden con los criterios de búsqueda.</returns>
         /// <response code="200">Devuelve la lista de propiedades encontradas.</response>
         [HttpGet]
         [ProducesResponseType(typeof(List<PropertyListItemDto>), 200)]
-        public async Task<IActionResult> Search([FromQuery] string? name, [FromQuery] string? address, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
+        public async Task<IActionResult> Search([FromQuery] string? name, [FromQuery] string? address, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice, [FromQuery] string? idOwner)
         {
-            var items = await _propertyService.SearchAsync(name, address, minPrice, maxPrice);
+            var items = await _propertyService.SearchAsync(name, address, minPrice, maxPrice, idOwner);
             return Ok(items);
         }
 

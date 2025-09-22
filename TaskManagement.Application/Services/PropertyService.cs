@@ -17,9 +17,9 @@ namespace TaskManagement.Application.Services
             _propertyRepository = propertyRepository;
         }
 
-        public async Task<List<PropertyListItemDto>> SearchAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice)
+        public async Task<List<PropertyListItemDto>> SearchAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice, string? idOwner)
         {
-            var properties = await _propertyRepository.SearchPropertiesAsync(name, address, minPrice, maxPrice);
+            var properties = await _propertyRepository.SearchPropertiesAsync(name, address, minPrice, maxPrice, idOwner);
 
             var results = new List<PropertyListItemDto>();
             foreach (var property in properties)

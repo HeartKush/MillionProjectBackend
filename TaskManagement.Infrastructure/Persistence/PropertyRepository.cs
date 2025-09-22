@@ -19,7 +19,7 @@ namespace TaskManagement.Infrastructure.Persistence
         private IMongoCollection<Owner> Owners => _database.GetCollection<Owner>("Owners");
         private IMongoCollection<PropertyImage> PropertyImages => _database.GetCollection<PropertyImage>("PropertyImages");
 
-        public async Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice)
+        public async Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice, string? idOwner)
         {
             var filterBuilder = Builders<Property>.Filter;
             var filter = filterBuilder.Empty;
@@ -35,6 +35,9 @@ namespace TaskManagement.Infrastructure.Persistence
 
             if (maxPrice.HasValue)
                 filter &= filterBuilder.Lte(p => p.Price, maxPrice.Value);
+
+            if (!string.IsNullOrWhiteSpace(idOwner))
+                filter &= filterBuilder.Eq(p => p.IdOwner, idOwner);
 
             return await Properties.Find(filter).ToListAsync();
         }

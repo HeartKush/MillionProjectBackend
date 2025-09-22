@@ -6,7 +6,7 @@ namespace TaskManagement.Domain.Repositories
 {
     public interface IPropertyRepository
     {
-        Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice);
+        Task<List<Property>> SearchPropertiesAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice, string? idOwner);
         Task<Property?> GetPropertyByIdAsync(string propertyId);
         Task<Owner?> GetOwnerByIdAsync(string ownerId);
         Task<PropertyImage?> GetMainImageForPropertyAsync(string propertyId);

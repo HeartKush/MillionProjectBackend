@@ -6,7 +6,7 @@ namespace TaskManagement.Application.Interfaces
 {
     public interface IPropertyService
     {
-        Task<List<PropertyListItemDto>> SearchAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice);
+        Task<List<PropertyListItemDto>> SearchAsync(string? name, string? address, decimal? minPrice, decimal? maxPrice, string? idOwner);
         Task<PropertyDetailDto?> GetByIdAsync(string propertyId);
         Task<string> CreateAsync(CreatePropertyRequest request);
     }

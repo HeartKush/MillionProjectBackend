@@ -21,7 +21,7 @@ namespace TaskManagement.Tests
             };
 
             var repo = new Mock<IPropertyRepository>();
-            repo.Setup(r => r.SearchPropertiesAsync("casa", null, null, null))
+            repo.Setup(r => r.SearchPropertiesAsync("casa", null, null, null, null))
                 .ReturnsAsync(properties);
             repo.Setup(r => r.GetMainImageForPropertyAsync("1"))
                 .ReturnsAsync(new PropertyImage { File = "https://img/1.jpg", Enabled = true, IdProperty = "1" });
@@ -30,7 +30,7 @@ namespace TaskManagement.Tests
 
             var service = new PropertyService(repo.Object);
 
-            var result = await service.SearchAsync("casa", null, null, null);
+            var result = await service.SearchAsync("casa", null, null, null, null);
 
             Assert.That(result, Is.TypeOf<List<PropertyListItemDto>>());
             Assert.That(result.Count, Is.EqualTo(2));
