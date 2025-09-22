@@ -74,6 +74,48 @@ namespace TaskManagement.API.Controllers
             var id = await _service.CreateAsync(request);
             return CreatedAtAction(nameof(GetById), new { id }, new { id });
         }
+
+        /// <summary>
+        /// Actualiza un propietario existente.
+        /// </summary>
+        /// <param name="id">ID único del propietario a actualizar.</param>
+        /// <param name="request">Datos actualizados del propietario.</param>
+        /// <returns>Sin contenido.</returns>
+        /// <response code="204">Propietario actualizado exitosamente.</response>
+        /// <response code="400">Datos de entrada inválidos.</response>
+        /// <response code="404">No se encontró el propietario con el ID especificado.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update(string id, [FromBody] CreateOwnerRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var success = await _service.UpdateAsync(id, request);
+            if (!success) return NotFound();
+            
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Elimina un propietario por su ID.
+        /// </summary>
+        /// <param name="id">ID único del propietario a eliminar.</param>
+        /// <returns>Sin contenido.</returns>
+        /// <response code="204">Propietario eliminado exitosamente.</response>
+        /// <response code="404">No se encontró el propietario con el ID especificado.</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var success = await _service.DeleteAsync(id);
+            if (!success) return NotFound();
+            
+            return NoContent();
+        }
     }
 }
 

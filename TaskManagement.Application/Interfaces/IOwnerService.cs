@@ -8,6 +8,8 @@ namespace TaskManagement.Application.Interfaces
     {
         Task<OwnerDetailDto?> GetByIdAsync(string ownerId);
         Task<string> CreateAsync(CreateOwnerRequest request);
+        Task<bool> UpdateAsync(string ownerId, CreateOwnerRequest request);
+        Task<bool> DeleteAsync(string ownerId);
         Task<List<OwnerListItemDto>> SearchAsync(string? name, string? address = null);
     }
 }

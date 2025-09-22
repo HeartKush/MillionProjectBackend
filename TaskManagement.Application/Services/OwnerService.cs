@@ -44,6 +44,24 @@ namespace TaskManagement.Application.Services
             return await _ownerRepository.CreateOwnerAsync(owner);
         }
 
+        public async Task<bool> UpdateAsync(string ownerId, CreateOwnerRequest request)
+        {
+            var existingOwner = await _ownerRepository.GetOwnerByIdAsync(ownerId);
+            if (existingOwner == null) return false;
+
+            existingOwner.Name = request.Name;
+            existingOwner.Address = request.Address;
+            existingOwner.Photo = request.Photo;
+            existingOwner.Birthday = request.Birthday;
+
+            return await _ownerRepository.UpdateOwnerAsync(existingOwner);
+        }
+
+        public async Task<bool> DeleteAsync(string ownerId)
+        {
+            return await _ownerRepository.DeleteOwnerAsync(ownerId);
+        }
+
         public async Task<List<OwnerListItemDto>> SearchAsync(string? name, string? address = null)
         {
             var owners = await _ownerRepository.SearchOwnersAsync(name, address);

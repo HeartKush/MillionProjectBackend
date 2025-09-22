@@ -28,6 +28,18 @@ namespace TaskManagement.Infrastructure.Persistence
             return owner.IdOwner!;
         }
 
+        public async Task<bool> UpdateOwnerAsync(Owner owner)
+        {
+            var result = await Owners.ReplaceOneAsync(o => o.IdOwner == owner.IdOwner, owner);
+            return result.ModifiedCount > 0;
+        }
+
+        public async Task<bool> DeleteOwnerAsync(string ownerId)
+        {
+            var result = await Owners.DeleteOneAsync(o => o.IdOwner == ownerId);
+            return result.DeletedCount > 0;
+        }
+
         public async Task<List<Owner>> SearchOwnersAsync(string? name, string? address = null)
         {
             var filters = new List<MongoDB.Driver.FilterDefinition<Owner>>();
