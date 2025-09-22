@@ -168,9 +168,9 @@ namespace TaskManagement.Tests
 
             // Assert
             Assert.That(result, Is.EqualTo("new-property-id"));
-            _mockRepository.Verify(r => r.CreatePropertyAsync(It.Is<Property>(p => 
-                p.Name == "Nueva Casa" && 
-                p.Price == 300000 && 
+            _mockRepository.Verify(r => r.CreatePropertyAsync(It.Is<Property>(p =>
+                p.Name == "Nueva Casa" &&
+                p.Price == 300000 &&
                 p.Featured == true)), Times.Once);
         }
 
@@ -217,9 +217,9 @@ namespace TaskManagement.Tests
 
             // Assert
             Assert.That(result, Is.EqualTo("1"));
-            _mockRepository.Verify(r => r.UpdatePropertyAsync(It.Is<Property>(p => 
-                p.Name == "Casa Actualizada" && 
-                p.Price == 150000 && 
+            _mockRepository.Verify(r => r.UpdatePropertyAsync(It.Is<Property>(p =>
+                p.Name == "Casa Actualizada" &&
+                p.Price == 150000 &&
                 p.Featured == true)), Times.Once);
         }
 

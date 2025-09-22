@@ -46,9 +46,9 @@ namespace TaskManagement.Tests
 
             // Assert
             Assert.That(result, Is.EqualTo("new-trace-id"));
-            _mockRepository.Verify(r => r.CreatePropertyTraceAsync(It.Is<PropertyTrace>(t => 
-                t.IdProperty == "1" && 
-                t.Name == "Comprador Test" && 
+            _mockRepository.Verify(r => r.CreatePropertyTraceAsync(It.Is<PropertyTrace>(t =>
+                t.IdProperty == "1" &&
+                t.Name == "Comprador Test" &&
                 t.Value == 500000)), Times.Once);
         }
 
@@ -185,8 +185,8 @@ namespace TaskManagement.Tests
             await _service.UpdateAsync("1", request);
 
             // Assert
-            _mockRepository.Verify(r => r.UpdatePropertyTraceAsync(It.Is<PropertyTrace>(t => 
-                t.Name == "Comprador Actualizado" && 
+            _mockRepository.Verify(r => r.UpdatePropertyTraceAsync(It.Is<PropertyTrace>(t =>
+                t.Name == "Comprador Actualizado" &&
                 t.Value == 600000)), Times.Once);
         }
 

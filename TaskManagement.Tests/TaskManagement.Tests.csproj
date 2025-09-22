@@ -17,5 +17,3 @@
     <ProjectReference Include="..\TaskManagement.API\TaskManagement.API.csproj" />
   </ItemGroup>
 </Project>
-
-
