@@ -20,7 +20,7 @@ API RESTful desarrollada en **.NET 8** para gestión completa de propiedades inm
 
 - .NET 8.0
 - MongoDB (local o en la nube)
-- Docker (opcional)
+- Docker (recomendado)
 
 ### Instalación
 
@@ -28,35 +28,52 @@ API RESTful desarrollada en **.NET 8** para gestión completa de propiedades inm
 
    ```bash
    git clone https://github.com/HeartKush/ProjectMillion.git
-   cd ProjectMillion
+   cd MillionProjectBackend
    dotnet restore
    ```
 
 2. **Variables de entorno**
-   Crear archivo `.env`:
+   Copiar y configurar `.env.example`:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Editar `.env` con tus credenciales:
 
    ```env
    MONGO_CONNECTION_STRING=mongodb://localhost:27017
    DATABASE_NAME=PropertiesBD
+   MONGO_ROOT_USERNAME=admin
+   MONGO_ROOT_PASSWORD=password
    AUTH0_DOMAIN=tu-dominio.auth0.com
    AUTH0_CLIENT_ID=tu-client-id
    AUTH0_CLIENT_SECRET=tu-client-secret
    AUTH0_AUDIENCE=tu-audience
+   ASPNETCORE_ENVIRONMENT=Development
    ```
 
 3. **Ejecutar**
 
    ```bash
    # Local
-   dotnet run
+   dotnet run --project TaskManagement.API
 
-   # Docker
+   # Docker (recomendado)
    docker-compose up --build
+
+   # Solo API
+   docker-compose up --build taskmanagementapi
    ```
 
 4. **Swagger UI**
    ```
    http://localhost:5120/swagger
+   ```
+
+5. **Health Check**
+   ```
+   http://localhost:5120/health
    ```
 
 ## 📋 Endpoints
@@ -376,6 +393,45 @@ dotnet run
 - **5 Transacciones** - Historial de ventas con impuestos calculados
 - **Imágenes Únicas** - Cada propiedad y propietario con imagen única
 
+## 🐳 Docker
+
+### Configuración Completa
+
+El proyecto incluye una configuración Docker completa con:
+
+- ✅ **Dockerfile optimizado** - Multi-stage build con seguridad mejorada
+- ✅ **Docker Compose** - Orquestación de servicios (API + MongoDB)
+- ✅ **Health Checks** - Monitoreo de salud de servicios
+- ✅ **Variables de entorno** - Configuración segura
+- ✅ **Volúmenes persistentes** - Datos de MongoDB preservados
+- ✅ **Usuario no-root** - Seguridad mejorada
+
+### Comandos Docker
+
+```bash
+# Construir y ejecutar todos los servicios
+docker-compose up --build
+
+# Ejecutar en segundo plano
+docker-compose up -d --build
+
+# Ver logs
+docker-compose logs -f
+
+# Detener servicios
+docker-compose down
+
+# Limpiar volúmenes
+docker-compose down -v
+```
+
+### Servicios Disponibles
+
+- **API Backend**: http://localhost:5120
+- **MongoDB**: localhost:27017
+- **Health Check**: http://localhost:5120/health
+- **Swagger UI**: http://localhost:5120/swagger/index.html
+
 ## 🚀 Despliegue
 
 ### Variables de Entorno de Producción
@@ -383,37 +439,77 @@ dotnet run
 ```env
 MONGO_CONNECTION_STRING=mongodb://production-server:27017
 DATABASE_NAME=PropertiesBD_Production
+MONGO_ROOT_USERNAME=admin
+MONGO_ROOT_PASSWORD=secure-password
 AUTH0_DOMAIN=production.auth0.com
 AUTH0_CLIENT_ID=production-client-id
 AUTH0_CLIENT_SECRET=production-client-secret
 AUTH0_AUDIENCE=production-audience
+ASPNETCORE_ENVIRONMENT=Production
 ```
 
-### Docker Compose
+### Docker Compose de Producción
 
 ```yaml
 version: "3.8"
-services:
-  api:
-    build: .
-    ports:
-      - "5120:80"
-    environment:
-      - MONGO_CONNECTION_STRING=mongodb://mongo:27017
-      - DATABASE_NAME=PropertiesBD
-    depends_on:
-      - mongo
 
-  mongo:
-    image: mongo:latest
+services:
+  taskmanagementapi:
+    build:
+      context: .
+      dockerfile: TaskManagement.API/Dockerfile
+    container_name: million-project-api
+    ports:
+      - "5120:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mongodb:
+    image: mongo:7.0
+    container_name: million-project-mongodb
     ports:
       - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME}
     volumes:
-      - mongo_data:/data/db
+      - mongodb_data:/data/db
+    restart: unless-stopped
 
 volumes:
-  mongo_data:
+  mongodb_data:
 ```
+
+## 🔒 Seguridad
+
+### Mejores Prácticas Implementadas
+
+- ✅ **Archivos .env excluidos** - Credenciales no expuestas en el repositorio
+- ✅ **Usuario no-root** - Contenedores ejecutan con usuario limitado
+- ✅ **Variables de entorno** - Configuración sensible externalizada
+- ✅ **Health checks** - Monitoreo de salud de servicios
+- ✅ **Restart policies** - Recuperación automática de servicios
+- ✅ **Volúmenes seguros** - Datos persistentes protegidos
+
+### Configuración de Seguridad
+
+1. **Nunca subir archivos .env al repositorio**
+2. **Usar .env.example como plantilla**
+3. **Configurar credenciales en variables de entorno del servidor**
+4. **Usar servicios de gestión de secretos en producción**
 
 ## 👨‍💻 Desarrollado por
 
