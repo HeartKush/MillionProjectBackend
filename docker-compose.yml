@@ -1,16 +1,48 @@
+version: "3.8"
+
 services:
   taskmanagementapi:
     build:
       context: .
       dockerfile: TaskManagement.API/Dockerfile
-    container_name: taskmanagementapi_v2
+    container_name: million-project-api
     ports:
       - "5120:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - MONGO_CONNECTION_STRING=mongodb+srv://andresparra05:andresparra12@atlascluster.pvp3gta.mongodb.net/
-      - DATABASE_NAME=PropertiesBD
-      - AUTH0_DOMAIN=dev-pyk3xhommtrhi3du.us.auth0.com
-      - AUTH0_CLIENT_ID=oQvCWrQizcg4TVvGZE5rASK79kJbT2YS
-      - AUTH0_CLIENT_SECRET=g62oEW50aBo28WOexB5FW7hgOpu7jAdGaDMHYqDsCY9UwySH67Fq0bNowUfSmtLm
-      - AUTH0_AUDIENCE=https://dev-pyk3xhommtrhi3du.us.auth0.com/api/v2/
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING:-mongodb://localhost:27017}
+      - DATABASE_NAME=${DATABASE_NAME:-PropertiesBD}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mongodb:
+    image: mongo:7.0
+    container_name: million-project-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-password}
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME:-PropertiesBD}
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mongodb_data:

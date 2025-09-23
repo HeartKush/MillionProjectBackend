@@ -24,7 +24,7 @@ databaseName = string.IsNullOrWhiteSpace(databaseName)
 
 if (string.IsNullOrWhiteSpace(mongoConnectionString) || string.IsNullOrWhiteSpace(databaseName))
 {
-    throw new InvalidOperationException("MONGO_CONNECTION_STRING o DATABASE_NAME no configurados. Define variables de entorno o config en appsettings.");
+    throw new InvalidOperationException("MONGO_CONNECTION_STRING o DATABASE_NAME no configurados.");
 }
 
 var auth0Domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN") ?? builder.Configuration["AUTH0_DOMAIN"];
@@ -35,7 +35,7 @@ var auth0Audience = Environment.GetEnvironmentVariable("AUTH0_AUDIENCE") ?? buil
 if (string.IsNullOrWhiteSpace(auth0Domain) || string.IsNullOrWhiteSpace(auth0ClientId) ||
     string.IsNullOrWhiteSpace(auth0ClientSecret) || string.IsNullOrWhiteSpace(auth0Audience))
 {
-    Console.WriteLine("⚠️  Advertencia: Configuración de Auth0 incompleta. El endpoint /api/Auth/token no funcionará.");
+    Console.WriteLine("⚠️  Advertencia: Configuración de Auth0 incompleta.");
 }
 builder.Services.AddSingleton<IMongoClient, MongoClient>(_ => new MongoClient(mongoConnectionString));
 builder.Services.AddScoped<IMongoDatabase>(sp =>

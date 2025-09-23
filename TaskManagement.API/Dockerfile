@@ -1,37 +1,48 @@
-# Etapa base para ejecutar la aplicación
+# Use the official .NET 8 runtime as base image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
-# Etapa de construcción
+# Use the official .NET 8 SDK for building
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar y restaurar dependencias específicas del proyecto
+# Copy project files
 COPY ["TaskManagement.API/TaskManagement.API.csproj", "TaskManagement.API/"]
 COPY ["TaskManagement.Infrastructure/TaskManagement.Infrastructure.csproj", "TaskManagement.Infrastructure/"]
 COPY ["TaskManagement.Domain/TaskManagement.Domain.csproj", "TaskManagement.Domain/"]
 COPY ["TaskManagement.Application/TaskManagement.Application.csproj", "TaskManagement.Application/"]
 
-# Restaurar dependencias
+# Restore dependencies
 RUN dotnet restore "TaskManagement.API/TaskManagement.API.csproj"
 
-# Copiar el resto de los archivos del proyecto
+# Copy all source code
 COPY . .
-WORKDIR "/src/TaskManagement.API"
 
-# Construir la aplicación
+# Build the application
+WORKDIR "/src/TaskManagement.API"
 RUN dotnet build "TaskManagement.API.csproj" -c Release -o /app/build
 
-# Etapa de publicación
+# Publish the application
 FROM build AS publish
-RUN dotnet publish "TaskManagement.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "TaskManagement.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Configuración final para la imagen
+# Final stage/image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Configurar el punto de entrada de la aplicación
+# Create a non-root user
+RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
+USER appuser
+
+# Set environment variables
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+# Expose the port
+EXPOSE 8080
+
+# Set the entry point
 ENTRYPOINT ["dotnet", "TaskManagement.API.dll"]

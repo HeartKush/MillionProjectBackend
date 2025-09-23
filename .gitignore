@@ -335,3 +335,28 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Docker
+.dockerignore
+
+# MongoDB data
+data/
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# Test results
+TestResults/
+*.trx
